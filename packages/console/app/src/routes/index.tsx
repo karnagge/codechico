@@ -42,7 +42,7 @@ export default function Home() {
   return (
     <main data-page="opencode">
       <HttpHeader name="Cache-Control" value="public, max-age=1, s-maxage=3600, stale-while-revalidate=86400" />
-      <Title>OpenCode | The AI coding agent built for the terminal</Title>
+      <Title>CodeChico | The AI coding agent built for the terminal</Title>
       <Link rel="icon" type="image/svg+xml" href="/favicon.svg" />
       <Meta property="og:image" content="/social-share.png" />
       <Meta name="twitter:image" content="/social-share.png" />
@@ -61,7 +61,7 @@ export default function Home() {
               </a>
               <strong>The AI coding agent built for the terminal</strong>
               <p>
-                OpenCode is fully open source, giving you control and freedom to use any provider, any model, and any
+                CodeChico is fully open source, giving you control and freedom to use any provider, any model, and any
                 editor.
               </p>
               <a href="/docs">
@@ -164,8 +164,8 @@ export default function Home() {
 
           <section data-component="what">
             <div data-slot="section-title">
-              <h3>What is OpenCode?</h3>
-              <p>OpenCode is an open source agent that helps you write and run code directly from the terminal.</p>
+              <h3>What is CodeChico?</h3>
+              <p>CodeChico is an open source agent that helps you write and run code directly from the terminal.</p>
             </div>
             <ul>
               <li>
@@ -207,7 +207,7 @@ export default function Home() {
               <li>
                 <span>[*]</span>
                 <div>
-                  <strong>Any editor</strong> OpenCode runs in your terminal, pair it with any IDE
+                  <strong>Any editor</strong> CodeChico runs in your terminal, pair it with any IDE
                 </div>
               </li>
             </ul>
@@ -220,7 +220,7 @@ export default function Home() {
                 <span>[*]</span>
                 <p>
                   With over <strong>26,000</strong> GitHub stars, <strong>188</strong> contributors, and almost{" "}
-                  <strong>3,000</strong> commits, OpenCode is used and trusted by over <strong>200,000</strong>{" "}
+                  <strong>3,000</strong> commits, CodeChico is used and trusted by over <strong>200,000</strong>{" "}
                   developers every month.
                 </p>
               </div>
@@ -633,7 +633,7 @@ export default function Home() {
                 <span>[*]</span>
 
                 <p>
-                  OpenCode does not store any of your code or context data, so that it can operate in privacy sensitive
+                  CodeChico does not store any of your code or context data, so that it can operate in privacy sensitive
                   environments. Learn more about <a href="/docs/enterprise/ ">privacy</a>.
                 </p>
               </div>
@@ -706,7 +706,7 @@ export default function Home() {
             <div data-slot="zen-cta-copy">
               <strong>Access reliable optimized models for coding agents</strong>
               <p>
-                Zen gives you access to a handpicked set of AI models that OpenCode has tested and benchmarked
+                Zen gives you access to a handpicked set of AI models that CodeChico has tested and benchmarked
                 specifically for coding agents. No need to worry about inconsistent performance and quality across
                 providers, use validated models that work.
               </p>

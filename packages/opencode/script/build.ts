@@ -30,7 +30,7 @@ for (const [os, arch] of targets) {
   console.log(`building ${os}-${arch}`)
   const name = `${pkg.name}-${os}-${arch}`
   await $`mkdir -p dist/${name}/bin`
-  await $`CGO_ENABLED=0 GOOS=${os} GOARCH=${GOARCH[arch]} go build -ldflags="-s -w -X main.Version=${Script.version}" -o ../opencode/dist/${name}/bin/tui ../tui/cmd/opencode/main.go`
+  await $`CGO_ENABLED=0 GOOS=${os} GOARCH=${GOARCH[arch]} go build -ldflags="-s -w -X main.Version=${Script.version}" -o ../opencode/dist/${name}/bin/tui ../tui/cmd/codechico/main.go`
     .cwd("../tui")
     .quiet()
 

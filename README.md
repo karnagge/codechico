@@ -3,7 +3,7 @@
     <picture>
       <source srcset="packages/console/app/src/asset/logo-ornate-dark.svg" media="(prefers-color-scheme: dark)">
       <source srcset="packages/console/app/src/asset/logo-ornate-light.svg" media="(prefers-color-scheme: light)">
-      <img src="packages/console/app/src/asset/logo-ornate-light.svg" alt="OpenCode logo">
+      <img src="packages/console/app/src/asset/logo-ornate-light.svg" alt="CodeChico logo">
     </picture>
   </a>
 </p>
@@ -14,7 +14,7 @@
   <a href="https://github.com/sst/opencode/actions/workflows/publish.yml"><img alt="Build status" src="https://img.shields.io/github/actions/workflow/status/sst/opencode/publish.yml?style=flat-square&branch=dev" /></a>
 </p>
 
-[![OpenCode Terminal UI](packages/web/src/assets/lander/screenshot.png)](https://opencode.ai)
+[![CodeChico Terminal UI](packages/web/src/assets/lander/screenshot.png)](https://opencode.ai)
 
 ---
 
@@ -52,11 +52,11 @@ XDG_BIN_DIR=$HOME/.local/bin curl -fsSL https://opencode.ai/install | bash
 
 ### Documentation
 
-For more info on how to configure OpenCode [**head over to our docs**](https://opencode.ai/docs).
+For more info on how to configure CodeChico [**head over to our docs**](https://opencode.ai/docs).
 
 ### Contributing
 
-If you're interested in contributing to OpenCode, please read our [contributing docs](./CONTRIBUTING.md) before submitting a pull request.
+If you're interested in contributing to CodeChico, please read our [contributing docs](./CONTRIBUTING.md) before submitting a pull request.
 
 ### FAQ
 
@@ -65,10 +65,10 @@ If you're interested in contributing to OpenCode, please read our [contributing 
 It's very similar to Claude Code in terms of capability. Here are the key differences:
 
 - 100% open source
-- Not coupled to any provider. Although Anthropic is recommended, OpenCode can be used with OpenAI, Google or even local models. As models evolve the gaps between them will close and pricing will drop so being provider-agnostic is important.
+- Not coupled to any provider. Although Anthropic is recommended, CodeChico can be used with OpenAI, Google or even local models. As models evolve the gaps between them will close and pricing will drop so being provider-agnostic is important.
 - Out of the box LSP support
-- A focus on TUI. OpenCode is built by neovim users and the creators of [terminal.shop](https://terminal.shop); we are going to push the limits of what's possible in the terminal.
-- A client/server architecture. This for example can allow OpenCode to run on your computer, while you can drive it remotely from a mobile app. Meaning that the TUI frontend is just one of the possible clients.
+- A focus on TUI. CodeChico is built by neovim users and the creators of [terminal.shop](https://terminal.shop); we are going to push the limits of what's possible in the terminal.
+- A client/server architecture. This for example can allow CodeChico to run on your computer, while you can drive it remotely from a mobile app. Meaning that the TUI frontend is just one of the possible clients.
 
 #### What's the other repo?
 

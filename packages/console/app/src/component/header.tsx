@@ -23,8 +23,8 @@ export function Header(props: { zen?: boolean }) {
   return (
     <section data-component="top">
       <A href="/">
-        <img data-slot="logo light" src={logoLight} alt="opencode logo light" />
-        <img data-slot="logo dark" src={logoDark} alt="opencode logo dark" />
+        <img data-slot="logo light" src={logoLight} alt="codechico logo light" />
+        <img data-slot="logo dark" src={logoDark} alt="codechico logo dark" />
       </A>
       <nav data-component="nav-desktop">
         <ul>

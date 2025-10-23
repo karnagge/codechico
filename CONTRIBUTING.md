@@ -1,6 +1,6 @@
-# Contributing to OpenCode
+# Contributing to CodeChico
 
-We want to make it easy for you to contribute to OpenCode. Here are the most common type of changes that get merged:
+We want to make it easy for you to contribute to CodeChico. Here are the most common type of changes that get merged:
 
 - Bug fixes
 - Additional LSPs / Formatters
@@ -23,7 +23,7 @@ If you are unsure if a PR would be accepted, feel free to ask a maintainer or lo
 
 Want to take on an issue? Leave a comment and a maintainer may assign it to you unless it is something we are already working on.
 
-## Developing OpenCode
+## Developing CodeChico
 
 - Requirements: Bun 1.3+, Go 1.24.x.
 - Install dependencies and start the dev server from the repo root:
@@ -34,12 +34,12 @@ Want to take on an issue? Leave a comment and a maintainer may assign it to you 
   ```
 
 - Core pieces:
-  - `packages/opencode`: OpenCode core business logic & server.
+  - `packages/opencode`: CodeChico core business logic & server.
   - `packages/tui`: The TUI code, written in Go (will be removed soon in favor of [opentui](https://github.com/sst/opentui))
   - `packages/plugin`: Source for `@opencode-ai/plugin`
 
 > [!NOTE]
-> After touching `packages/opencode/src/server/server.ts`, the OpenCode team must regenerate the Stainless SDK before any client updates merge.
+> After touching `packages/opencode/src/server/server.ts`, the CodeChico team must regenerate the Stainless SDK before any client updates merge.
 
 ## Pull Request Expectations
 
@@ -64,4 +64,4 @@ These are not strictly enforced, they are just general guidelines:
 
 ## Feature Requests
 
-For net-new functionality, start with a design conversation. Open an issue describing the problem, your proposed approach (optional), and why it belongs in OpenCode. The core team will help decide whether it should move forward; please wait for that approval instead of opening a feature PR directly.
+For net-new functionality, start with a design conversation. Open an issue describing the problem, your proposed approach (optional), and why it belongs in CodeChico. The core team will help decide whether it should move forward; please wait for that approval instead of opening a feature PR directly.

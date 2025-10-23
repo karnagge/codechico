@@ -38,15 +38,15 @@ export default function Home() {
 
   return (
     <main data-page="home">
-      <Title>opencode | AI coding agent built for the terminal</Title>
+      <Title>codechico | AI coding agent built for the terminal</Title>
 
       <div data-component="content">
         <section data-component="top">
-          <img data-slot="logo light" src={logoLight} alt="opencode logo light" />
-          <img data-slot="logo dark" src={logoDark} alt="opencode logo dark" />
+          <img data-slot="logo light" src={logoLight} alt="codechico logo light" />
+          <img data-slot="logo dark" src={logoDark} alt="codechico logo dark" />
           <h1 data-slot="title">The AI coding agent built for the terminal</h1>
           <div data-slot="login">
-            <a href="/auth">opencode zen</a>
+            <a href="/auth">codechico zen</a>
           </div>
         </section>
 
@@ -55,7 +55,7 @@ export default function Home() {
             <a href="/docs">Get Started</a>
           </div>
           <div data-slot="center">
-            <a href="/auth">opencode zen</a>
+            <a href="/auth">codechico zen</a>
           </div>
           <div data-slot="right">
             <button data-copy data-slot="command">
@@ -79,7 +79,7 @@ export default function Home() {
               <strong>LSP enabled</strong> Automatically loads the right LSPs for the LLM
             </li>
             <li>
-              <strong>opencode zen</strong> A <a href="/docs/zen">curated list of models</a> provided by opencode{" "}
+              <strong>codechico zen</strong> A <a href="/docs/zen">curated list of models</a> provided by codechico{" "}
               <label>New</label>
             </li>
             <li>
@@ -139,9 +139,9 @@ export default function Home() {
 
         <section data-component="screenshots">
           <figure>
-            <figcaption>opencode TUI with the tokyonight theme</figcaption>
+            <figcaption>codechico TUI with the tokyonight theme</figcaption>
             <a href="/docs/cli">
-              <img src={IMG_SPLASH} alt="opencode TUI with tokyonight theme" />
+              <img src={IMG_SPLASH} alt="codechico TUI with tokyonight theme" />
             </a>
           </figure>
         </section>
