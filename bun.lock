@@ -166,7 +166,7 @@
       "name": "opencode",
       "version": "0.15.13",
       "bin": {
-        "opencode": "./bin/opencode",
+        "codechico": "./bin/codechico",
       },
       "dependencies": {
         "@actions/core": "1.11.1",

@@ -125,7 +125,7 @@ export const TuiCommand = cmd({
           cmd = [binary]
         }
         if (!tui) {
-          const dir = Bun.fileURLToPath(new URL("../../../../tui/cmd/opencode", import.meta.url))
+          const dir = Bun.fileURLToPath(new URL("../../../../tui/cmd/codechico", import.meta.url))
           let binaryName = `./dist/tui${process.platform === "win32" ? ".exe" : ""}`
           await $`go build -o ${binaryName} ./main.go`.cwd(dir)
           cmd = [path.join(dir, binaryName)]
@@ -148,7 +148,7 @@ export const TuiCommand = cmd({
           env: {
             ...process.env,
             CGO_ENABLED: "0",
-            OPENCODE_SERVER: server.url.toString(),
+            CODECHICO_SERVER: server.url.toString(),
           },
           onExit: () => {
             server.stop()
