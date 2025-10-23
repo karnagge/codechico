@@ -463,7 +463,7 @@ func (a Model) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 		a.showCompletionDialog = false
 	case opencode.EventListResponseEventInstallationUpdated:
 		return a, toast.NewSuccessToast(
-			"opencode updated to "+msg.Properties.Version+", restart to apply.",
+			"codechico updated to "+msg.Properties.Version+", restart to apply.",
 			toast.WithTitle("New version installed"),
 		)
 		/*
@@ -961,22 +961,22 @@ func (a Model) home() (string, int, int) {
 	base := baseStyle.Render
 	muted := styles.NewStyle().Foreground(t.TextMuted()).Background(t.Background()).Render
 
-	open := `
-                    
-█▀▀█ █▀▀█ █▀▀█ █▀▀▄ 
-█░░█ █░░█ █▀▀▀ █░░█ 
-▀▀▀▀ █▀▀▀ ▀▀▀▀ ▀  ▀ `
-
 	code := `
              ▄
-█▀▀▀ █▀▀█ █▀▀█ █▀▀█
-█░░░ █░░█ █░░█ █▀▀▀
-▀▀▀▀ ▀▀▀▀ ▀▀▀▀ ▀▀▀▀`
+█▀▀▀ █▀▀█ █▀▀█ █▀▀█ 
+█░░░ █░░█ █░░█ █▀▀▀ 
+▀▀▀▀ ▀▀▀▀ ▀▀▀▀ ▀▀▀▀ `
+
+	chico := `
+           
+█▀▀▀ █░░█ ▀█▀ █▀▀▀ █▀▀█
+█░░░ █▀▀█  █  █░░░ █░░█
+▀▀▀▀ ▀  ▀ ▀▀▀ ▀▀▀▀ ▀▀▀▀`
 
 	logo := lipgloss.JoinHorizontal(
 		lipgloss.Top,
-		muted(open),
 		base(code),
+		muted(chico),
 	)
 	// cwd := app.Info.Path.Cwd
 	// config := app.Info.Path.Config
