@@ -10,3 +10,11 @@ playground
 tmp
 dist
 .turbo
+
+# Scripts de instalação local
+install-local.sh
+README-PT.md
+
+# Binários compilados não devem ser commitados
+packages/opencode/bin/codechico
+packages/opencode/dist/
