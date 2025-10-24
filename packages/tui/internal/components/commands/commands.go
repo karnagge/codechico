@@ -89,14 +89,14 @@ func (c *commandsComponent) View() string {
 			// },
 			commands.Command{
 				Name:        commands.CommandName(util.Ide()),
-				Description: "open opencode",
+				Description: "abrir opencode",
 				Keybindings: []commands.Keybinding{
 					{Key: ctrlKey + "+esc", RequiresLeader: false},
 				},
 			},
 			commands.Command{
 				Name:        commands.CommandName(util.Ide()),
-				Description: "reference file",
+				Description: "referenciar arquivo",
 				Keybindings: []commands.Keybinding{
 					{Key: ctrlKey + "+opt+k", RequiresLeader: false},
 				},
@@ -107,9 +107,9 @@ func (c *commandsComponent) View() string {
 	if len(commandsToShow) == 0 {
 		muted := styles.NewStyle().Foreground(theme.CurrentTheme().TextMuted())
 		if c.showAll {
-			return muted.Render("No commands available")
+			return muted.Render("Nenhum comando disponível")
 		}
-		return muted.Render("No commands with triggers available")
+		return muted.Render("Nenhum comando com atalhos disponível")
 	}
 
 	// Calculate column widths

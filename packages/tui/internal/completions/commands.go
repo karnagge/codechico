@@ -25,7 +25,7 @@ func (c *CommandCompletionProvider) GetId() string {
 }
 
 func (c *CommandCompletionProvider) GetEmptyMessage() string {
-	return "no matching commands"
+	return "nenhum comando correspondente"
 }
 
 func (c *CommandCompletionProvider) getCommandCompletionItem(

@@ -7,6 +7,9 @@ if (!process.versions.bun.startsWith("1.3.")) {
 const CHANNEL = process.env["OPENCODE_CHANNEL"] ?? (await $`git branch --show-current`.text().then((x) => x.trim()))
 const IS_PREVIEW = CHANNEL !== "latest"
 const VERSION = await (async () => {
+  // Se OPENCODE_VERSION estiver definido, usa essa versão diretamente
+  if (process.env["OPENCODE_VERSION"]) return process.env["OPENCODE_VERSION"]
+  
   if (IS_PREVIEW) return `0.0.0-${CHANNEL}-${new Date().toISOString().slice(0, 16).replace(/[-:T]/g, "")}`
   const version = await fetch("https://registry.npmjs.org/opencode-ai/latest")
     .then((res) => {
