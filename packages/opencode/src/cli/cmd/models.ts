@@ -4,7 +4,7 @@ import { cmd } from "./cmd"
 
 export const ModelsCommand = cmd({
   command: "models",
-  describe: "list all available models",
+  describe: "listar todos os modelos disponíveis",
   handler: async () => {
     await Instance.provide({
       directory: process.cwd(),

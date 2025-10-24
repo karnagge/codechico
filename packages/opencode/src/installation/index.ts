@@ -121,7 +121,7 @@ export namespace Installation {
             HOMEBREW_NO_AUTO_UPDATE: "1",
           })
         default:
-          throw new Error(`Unknown method: ${method}`)
+          throw new Error(`Método desconhecido: ${method}`)
       }
     })()
     const result = await cmd.quiet().throws(false)

@@ -187,7 +187,7 @@ export namespace Patch {
     const endIdx = lines.findIndex(line => line.trim() === endMarker)
     
     if (beginIdx === -1 || endIdx === -1 || beginIdx >= endIdx) {
-      throw new Error("Invalid patch format: missing Begin/End markers")
+      throw new Error("Formato de patch inválido: marcadores Begin/End ausentes")
     }
     
     // Parse content between markers
@@ -299,7 +299,7 @@ export namespace Patch {
     try {
       originalContent = require("fs").readFileSync(filePath, "utf-8")
     } catch (error) {
-      throw new Error(`Failed to read file ${filePath}: ${error}`)
+      throw new Error(`Falha ao ler arquivo ${filePath}: ${error}`)
     }
     
     let originalLines = originalContent.split("\n")
@@ -337,7 +337,7 @@ export namespace Patch {
       if (chunk.change_context) {
         const contextIdx = seekSequence(originalLines, [chunk.change_context], lineIndex)
         if (contextIdx === -1) {
-          throw new Error(`Failed to find context '${chunk.change_context}' in ${filePath}`)
+          throw new Error(`Não foi possível encontrar o contexto '${chunk.change_context}' em ${filePath}`)
         }
         lineIndex = contextIdx + 1
       }
@@ -370,7 +370,7 @@ export namespace Patch {
         lineIndex = found + pattern.length
       } else {
         throw new Error(
-          `Failed to find expected lines in ${filePath}:\n${chunk.old_lines.join("\n")}`
+          `Não foi possível encontrar as linhas esperadas em ${filePath}:\n${chunk.old_lines.join("\n")}`
         )
       }
     }
@@ -452,7 +452,7 @@ export namespace Patch {
   // Apply hunks to filesystem
   export async function applyHunksToFiles(hunks: Hunk[]): Promise<AffectedPaths> {
     if (hunks.length === 0) {
-      throw new Error("No files were modified.")
+      throw new Error("Nenhum arquivo foi modificado.")
     }
     
     const added: string[] = []

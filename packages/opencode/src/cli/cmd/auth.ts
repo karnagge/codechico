@@ -12,7 +12,7 @@ import { Instance } from "../../project/instance"
 
 export const AuthCommand = cmd({
   command: "auth",
-  describe: "manage credentials",
+  describe: "gerenciar credenciais",
   builder: (yargs) =>
     yargs.command(AuthLoginCommand).command(AuthLogoutCommand).command(AuthListCommand).demandCommand(),
   async handler() {},
@@ -21,13 +21,13 @@ export const AuthCommand = cmd({
 export const AuthListCommand = cmd({
   command: "list",
   aliases: ["ls"],
-  describe: "list providers",
+  describe: "listar provedores",
   async handler() {
     UI.empty()
     const authPath = path.join(Global.Path.data, "auth.json")
     const homedir = os.homedir()
     const displayPath = authPath.startsWith(homedir) ? authPath.replace(homedir, "~") : authPath
-    prompts.intro(`Credentials ${UI.Style.TEXT_DIM}${displayPath}`)
+    prompts.intro(`Credenciais ${UI.Style.TEXT_DIM}${displayPath}`)
     const results = await Auth.all().then((x) => Object.entries(x))
     const database = await ModelsDev.get()
 
@@ -36,7 +36,7 @@ export const AuthListCommand = cmd({
       prompts.log.info(`${name} ${UI.Style.TEXT_DIM}${result.type}`)
     }
 
-    prompts.outro(`${results.length} credentials`)
+    prompts.outro(`${results.length} credenciais`)
 
     // Environment variables section
     const activeEnvVars: Array<{ provider: string; envVar: string }> = []
@@ -54,23 +54,23 @@ export const AuthListCommand = cmd({
 
     if (activeEnvVars.length > 0) {
       UI.empty()
-      prompts.intro("Environment")
+      prompts.intro("Ambiente")
 
       for (const { provider, envVar } of activeEnvVars) {
         prompts.log.info(`${provider} ${UI.Style.TEXT_DIM}${envVar}`)
       }
 
-      prompts.outro(`${activeEnvVars.length} environment variable` + (activeEnvVars.length === 1 ? "" : "s"))
+      prompts.outro(`${activeEnvVars.length} variável${activeEnvVars.length === 1 ? "" : "is"} de ambiente`)
     }
   },
 })
 
 export const AuthLoginCommand = cmd({
   command: "login [url]",
-  describe: "log in to a provider",
+  describe: "fazer login em um provedor",
   builder: (yargs) =>
     yargs.positional("url", {
-      describe: "opencode auth provider",
+      describe: "provedor de autenticação opencode",
       type: "string",
     }),
   async handler(args) {
@@ -78,18 +78,18 @@ export const AuthLoginCommand = cmd({
       directory: process.cwd(),
       async fn() {
         UI.empty()
-        prompts.intro("Add credential")
+        prompts.intro("Adicionar credencial")
         if (args.url) {
           const wellknown = await fetch(`${args.url}/.well-known/opencode`).then((x) => x.json())
-          prompts.log.info(`Running \`${wellknown.auth.command.join(" ")}\``)
+          prompts.log.info(`Executando \`${wellknown.auth.command.join(" ")}\``)
           const proc = Bun.spawn({
             cmd: wellknown.auth.command,
             stdout: "pipe",
           })
           const exit = await proc.exited
           if (exit !== 0) {
-            prompts.log.error("Failed")
-            prompts.outro("Done")
+            prompts.log.error("Falhou")
+            prompts.outro("Pronto!")
             return
           }
           const token = await new Response(proc.stdout).text()
@@ -98,8 +98,8 @@ export const AuthLoginCommand = cmd({
             key: wellknown.auth.env,
             token: token.trim(),
           })
-          prompts.log.success("Logged into " + args.url)
-          prompts.outro("Done")
+          prompts.log.success("Login efetuado em " + args.url)
+          prompts.outro("Pronto!")
           return
         }
         await ModelsDev.refresh().catch(() => {})
@@ -114,7 +114,7 @@ export const AuthLoginCommand = cmd({
           vercel: 6,
         }
         let provider = await prompts.autocomplete({
-          message: "Select provider",
+          message: "Selecione o provedor",
           maxItems: 8,
           options: [
             ...pipe(
@@ -127,12 +127,12 @@ export const AuthLoginCommand = cmd({
               map((x) => ({
                 label: x.name,
                 value: x.id,
-                hint: priority[x.id] <= 1 ? "recommended" : undefined,
+                hint: priority[x.id] <= 1 ? "recomendado" : undefined,
               })),
             ),
             {
               value: "other",
-              label: "Other",
+              label: "Outro",
             },
           ],
         })
@@ -144,7 +144,7 @@ export const AuthLoginCommand = cmd({
           let index = 0
           if (plugin.auth.methods.length > 1) {
             const method = await prompts.select({
-              message: "Login method",
+              message: "Método de login",
               options: [
                 ...plugin.auth.methods.map((x, index) => ({
                   label: x.label,
@@ -161,7 +161,7 @@ export const AuthLoginCommand = cmd({
             const authorize = await method.authorize()
 
             if (authorize.url) {
-              prompts.log.info("Go to: " + authorize.url)
+              prompts.log.info("Acesse: " + authorize.url)
             }
 
             if (authorize.method === "auto") {
@@ -169,10 +169,10 @@ export const AuthLoginCommand = cmd({
                 prompts.log.info(authorize.instructions)
               }
               const spinner = prompts.spinner()
-              spinner.start("Waiting for authorization...")
+              spinner.start("Aguardando autorização...")
               const result = await authorize.callback()
               if (result.type === "failed") {
-                spinner.stop("Failed to authorize", 1)
+                spinner.stop("Falha ao autorizar", 1)
               }
               if (result.type === "success") {
                 if ("refresh" in result) {
@@ -189,19 +189,19 @@ export const AuthLoginCommand = cmd({
                     key: result.key,
                   })
                 }
-                spinner.stop("Login successful")
+                spinner.stop("Login realizado com sucesso!")
               }
             }
 
             if (authorize.method === "code") {
               const code = await prompts.text({
-                message: "Paste the authorization code here: ",
-                validate: (x) => (x && x.length > 0 ? undefined : "Required"),
+                message: "Cole o código de autorização aqui: ",
+                validate: (x) => (x && x.length > 0 ? undefined : "Obrigatório"),
               })
               if (prompts.isCancel(code)) throw new UI.CancelledError()
               const result = await authorize.callback(code)
               if (result.type === "failed") {
-                prompts.log.error("Failed to authorize")
+                prompts.log.error("Falha ao autorizar")
               }
               if (result.type === "success") {
                 if ("refresh" in result) {
@@ -218,54 +218,54 @@ export const AuthLoginCommand = cmd({
                     key: result.key,
                   })
                 }
-                prompts.log.success("Login successful")
+                prompts.log.success("Login realizado com sucesso!")
               }
             }
-            prompts.outro("Done")
+            prompts.outro("Pronto!")
             return
           }
         }
 
         if (provider === "other") {
           provider = await prompts.text({
-            message: "Enter provider id",
-            validate: (x) => (x && x.match(/^[0-9a-z-]+$/) ? undefined : "a-z, 0-9 and hyphens only"),
+            message: "Digite o id do provedor",
+            validate: (x) => (x && x.match(/^[0-9a-z-]+$/) ? undefined : "apenas a-z, 0-9 e hífens"),
           })
           if (prompts.isCancel(provider)) throw new UI.CancelledError()
           provider = provider.replace(/^@ai-sdk\//, "")
           if (prompts.isCancel(provider)) throw new UI.CancelledError()
           prompts.log.warn(
-            `This only stores a credential for ${provider} - you will need configure it in opencode.json, check the docs for examples.`,
+            `Isso apenas armazena a credencial para ${provider} - você precisará configurá-lo no opencode.json, veja a documentação para exemplos.`,
           )
         }
 
         if (provider === "amazon-bedrock") {
           prompts.log.info(
-            "Amazon bedrock can be configured with standard AWS environment variables like AWS_BEARER_TOKEN_BEDROCK, AWS_PROFILE or AWS_ACCESS_KEY_ID",
+            "Amazon bedrock pode ser configurado com variáveis de ambiente AWS padrão como AWS_BEARER_TOKEN_BEDROCK, AWS_PROFILE ou AWS_ACCESS_KEY_ID",
           )
-          prompts.outro("Done")
+          prompts.outro("Pronto!")
           return
         }
 
         if (provider === "google-vertex") {
           prompts.log.info(
-            "Google Cloud Vertex AI uses Application Default Credentials. Set GOOGLE_APPLICATION_CREDENTIALS or run 'gcloud auth application-default login'. Optionally set GOOGLE_CLOUD_PROJECT and GOOGLE_CLOUD_LOCATION (or VERTEX_LOCATION)",
+            "Google Cloud Vertex AI usa Application Default Credentials. Configure GOOGLE_APPLICATION_CREDENTIALS ou execute 'gcloud auth application-default login'. Opcionalmente configure GOOGLE_CLOUD_PROJECT e GOOGLE_CLOUD_LOCATION (ou VERTEX_LOCATION)",
           )
-          prompts.outro("Done")
+          prompts.outro("Pronto!")
           return
         }
 
         if (provider === "opencode") {
-          prompts.log.info("Create an api key at https://opencode.ai/auth")
+          prompts.log.info("Crie uma chave API em https://opencode.ai/auth")
         }
 
         if (provider === "vercel") {
-          prompts.log.info("You can create an api key at https://vercel.link/ai-gateway-token")
+          prompts.log.info("Você pode criar uma chave API em https://vercel.link/ai-gateway-token")
         }
 
         const key = await prompts.password({
-          message: "Enter your API key",
-          validate: (x) => (x && x.length > 0 ? undefined : "Required"),
+          message: "Digite sua chave API",
+          validate: (x) => (x && x.length > 0 ? undefined : "Obrigatório"),
         })
         if (prompts.isCancel(key)) throw new UI.CancelledError()
         await Auth.set(provider, {
@@ -273,7 +273,7 @@ export const AuthLoginCommand = cmd({
           key,
         })
 
-        prompts.outro("Done")
+        prompts.outro("Pronto!")
       },
     })
   },
@@ -281,18 +281,18 @@ export const AuthLoginCommand = cmd({
 
 export const AuthLogoutCommand = cmd({
   command: "logout",
-  describe: "log out from a configured provider",
+  describe: "fazer logout de um provedor configurado",
   async handler() {
     UI.empty()
     const credentials = await Auth.all().then((x) => Object.entries(x))
-    prompts.intro("Remove credential")
+    prompts.intro("Remover credencial")
     if (credentials.length === 0) {
-      prompts.log.error("No credentials found")
+      prompts.log.error("Nenhuma credencial encontrada")
       return
     }
     const database = await ModelsDev.get()
     const providerID = await prompts.select({
-      message: "Select provider",
+      message: "Selecione o provedor",
       options: credentials.map(([key, value]) => ({
         label: (database[key]?.name || key) + UI.Style.TEXT_DIM + " (" + value.type + ")",
         value: key,
@@ -300,6 +300,6 @@ export const AuthLogoutCommand = cmd({
     })
     if (prompts.isCancel(providerID)) throw new UI.CancelledError()
     await Auth.remove(providerID)
-    prompts.outro("Logout successful")
+    prompts.outro("Logout realizado com sucesso!")
   },
 })

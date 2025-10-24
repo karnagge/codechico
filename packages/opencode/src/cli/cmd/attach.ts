@@ -8,7 +8,7 @@ import { $ } from "bun"
 
 export const AttachCommand = cmd({
   command: "attach <server>",
-  describe: "attach to a running opencode server",
+  describe: "conectar a um servidor opencode em execução",
   builder: (yargs) =>
     yargs
       .positional("server", {
@@ -17,7 +17,7 @@ export const AttachCommand = cmd({
       })
       .option("session", {
         alias: ["s"],
-        describe: "session id to continue",
+        describe: "id da sessão para continuar",
         type: "string",
       }),
   handler: async (args) => {

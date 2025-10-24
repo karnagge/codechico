@@ -12,29 +12,29 @@ export const McpCommand = cmd({
 
 export const McpAddCommand = cmd({
   command: "add",
-  describe: "add an MCP server",
+  describe: "adicionar um servidor MCP",
   async handler() {
     UI.empty()
-    prompts.intro("Add MCP server")
+    prompts.intro("Adicionar servidor MCP")
 
     const name = await prompts.text({
-      message: "Enter MCP server name",
-      validate: (x) => (x && x.length > 0 ? undefined : "Required"),
+      message: "Digite o nome do servidor MCP",
+      validate: (x) => (x && x.length > 0 ? undefined : "Obrigatório"),
     })
     if (prompts.isCancel(name)) throw new UI.CancelledError()
 
     const type = await prompts.select({
-      message: "Select MCP server type",
+      message: "Selecione o tipo de servidor MCP",
       options: [
         {
           label: "Local",
           value: "local",
-          hint: "Run a local command",
+          hint: "Executar um comando local",
         },
         {
-          label: "Remote",
+          label: "Remoto",
           value: "remote",
-          hint: "Connect to a remote URL",
+          hint: "Conectar a uma URL remota",
         },
       ],
     })
@@ -42,26 +42,26 @@ export const McpAddCommand = cmd({
 
     if (type === "local") {
       const command = await prompts.text({
-        message: "Enter command to run",
-        placeholder: "e.g., opencode x @modelcontextprotocol/server-filesystem",
-        validate: (x) => (x && x.length > 0 ? undefined : "Required"),
+        message: "Digite o comando para executar",
+        placeholder: "ex: opencode x @modelcontextprotocol/server-filesystem",
+        validate: (x) => (x && x.length > 0 ? undefined : "Obrigatório"),
       })
       if (prompts.isCancel(command)) throw new UI.CancelledError()
 
-      prompts.log.info(`Local MCP server "${name}" configured with command: ${command}`)
-      prompts.outro("MCP server added successfully")
+      prompts.log.info(`Servidor MCP local "${name}" configurado com o comando: ${command}`)
+      prompts.outro("Servidor MCP adicionado com sucesso!")
       return
     }
 
     if (type === "remote") {
       const url = await prompts.text({
-        message: "Enter MCP server URL",
-        placeholder: "e.g., https://example.com/mcp",
+        message: "Digite a URL do servidor MCP",
+        placeholder: "ex: https://example.com/mcp",
         validate: (x) => {
-          if (!x) return "Required"
-          if (x.length === 0) return "Required"
+          if (!x) return "Obrigatório"
+          if (x.length === 0) return "Obrigatório"
           const isValid = URL.canParse(x)
-          return isValid ? undefined : "Invalid URL"
+          return isValid ? undefined : "URL inválida"
         },
       })
       if (prompts.isCancel(url)) throw new UI.CancelledError()
@@ -72,9 +72,9 @@ export const McpAddCommand = cmd({
       })
       const transport = new StreamableHTTPClientTransport(new URL(url))
       await client.connect(transport)
-      prompts.log.info(`Remote MCP server "${name}" configured with URL: ${url}`)
+      prompts.log.info(`Servidor MCP remoto "${name}" configurado com a URL: ${url}`)
     }
 
-    prompts.outro("MCP server added successfully")
+    prompts.outro("Servidor MCP adicionado com sucesso!")
   },
 })

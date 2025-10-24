@@ -8,10 +8,10 @@ import { EOL } from "os"
 
 export const ExportCommand = cmd({
   command: "export [sessionID]",
-  describe: "export session data as JSON",
+  describe: "exportar dados da sessão como JSON",
   builder: (yargs: Argv) => {
     return yargs.positional("sessionID", {
-      describe: "session id to export",
+      describe: "id da sessão para exportar",
       type: "string",
     })
   },
@@ -21,7 +21,7 @@ export const ExportCommand = cmd({
 
       if (!sessionID) {
         UI.empty()
-        prompts.intro("Export session")
+        prompts.intro("Exportar sessão")
 
         const sessions = []
         for await (const session of Session.list()) {
@@ -29,15 +29,15 @@ export const ExportCommand = cmd({
         }
 
         if (sessions.length === 0) {
-          prompts.log.error("No sessions found")
-          prompts.outro("Done")
+          prompts.log.error("Nenhuma sessão encontrada")
+          prompts.outro("Pronto!")
           return
         }
 
         sessions.sort((a, b) => b.time.updated - a.time.updated)
 
         const selectedSession = await prompts.autocomplete({
-          message: "Select session to export",
+          message: "Selecione a sessão para exportar",
           maxItems: 10,
           options: sessions.map((session) => ({
             label: session.title,
@@ -52,7 +52,7 @@ export const ExportCommand = cmd({
 
         sessionID = selectedSession as string
 
-        prompts.outro("Exporting session...")
+        prompts.outro("Exportando sessão...")
       }
 
       try {
@@ -70,7 +70,7 @@ export const ExportCommand = cmd({
         process.stdout.write(JSON.stringify(exportData, null, 2))
         process.stdout.write(EOL)
       } catch (error) {
-        UI.error(`Session not found: ${sessionID!}`)
+        UI.error(`Sessão não encontrada: ${sessionID!}`)
         process.exit(1)
       }
     })

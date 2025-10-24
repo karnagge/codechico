@@ -9,22 +9,22 @@ import { Instance } from "../../project/instance"
 
 const AgentCreateCommand = cmd({
   command: "create",
-  describe: "create a new agent",
+  describe: "criar um novo agente",
   async handler() {
     await Instance.provide({
       directory: process.cwd(),
       async fn() {
         UI.empty()
-        prompts.intro("Create agent")
+        prompts.intro("Criar agente")
         const project = Instance.project
 
         let scope: "global" | "project" = "global"
         if (project.vcs === "git") {
           const scopeResult = await prompts.select({
-            message: "Location",
+            message: "Localização",
             options: [
               {
-                label: "Current project",
+                label: "Projeto atual",
                 value: "project" as const,
                 hint: Instance.worktree,
               },
@@ -40,20 +40,20 @@ const AgentCreateCommand = cmd({
         }
 
         const query = await prompts.text({
-          message: "Description",
-          placeholder: "What should this agent do?",
-          validate: (x) => (x && x.length > 0 ? undefined : "Required"),
+          message: "Descrição",
+          placeholder: "O que esse agente deve fazer?",
+          validate: (x) => (x && x.length > 0 ? undefined : "Obrigatório"),
         })
         if (prompts.isCancel(query)) throw new UI.CancelledError()
 
         const spinner = prompts.spinner()
 
-        spinner.start("Generating agent configuration...")
+        spinner.start("Gerando configuração do agente...")
         const generated = await Agent.generate({ description: query }).catch((error) => {
-          spinner.stop(`LLM failed to generate agent: ${error.message}`, 1)
+          spinner.stop(`A IA falhou ao gerar o agente: ${error.message}`, 1)
           throw new UI.CancelledError()
         })
-        spinner.stop(`Agent ${generated.identifier} generated`)
+        spinner.stop(`Agente ${generated.identifier} gerado com sucesso!`)
 
         const availableTools = [
           "bash",
@@ -70,7 +70,7 @@ const AgentCreateCommand = cmd({
         ]
 
         const selectedTools = await prompts.multiselect({
-          message: "Select tools to enable",
+          message: "Selecione as ferramentas para habilitar",
           options: availableTools.map((tool) => ({
             label: tool,
             value: tool,
@@ -80,22 +80,22 @@ const AgentCreateCommand = cmd({
         if (prompts.isCancel(selectedTools)) throw new UI.CancelledError()
 
         const modeResult = await prompts.select({
-          message: "Agent mode",
+          message: "Modo do agente",
           options: [
             {
-              label: "All",
+              label: "Todos",
               value: "all" as const,
-              hint: "Can function in both primary and subagent roles",
+              hint: "Pode funcionar tanto como agente principal quanto subagente",
             },
             {
-              label: "Primary",
+              label: "Principal",
               value: "primary" as const,
-              hint: "Acts as a primary/main agent",
+              hint: "Atua como agente principal",
             },
             {
-              label: "Subagent",
+              label: "Subagente",
               value: "subagent" as const,
-              hint: "Can be used as a subagent by other agents",
+              hint: "Pode ser usado como subagente por outros agentes",
             },
           ],
           initialValue: "all",
@@ -126,8 +126,8 @@ const AgentCreateCommand = cmd({
 
         await Bun.write(filePath, content)
 
-        prompts.log.success(`Agent created: ${filePath}`)
-        prompts.outro("Done")
+        prompts.log.success(`Agente criado: ${filePath}`)
+        prompts.outro("Pronto!")
       },
     })
   },
@@ -135,7 +135,7 @@ const AgentCreateCommand = cmd({
 
 export const AgentCommand = cmd({
   command: "agent",
-  describe: "manage agents",
+  describe: "gerenciar agentes",
   builder: (yargs) => yargs.command(AgentCreateCommand).demandCommand(),
   async handler() {},
 })

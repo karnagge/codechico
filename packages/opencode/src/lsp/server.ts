@@ -59,7 +59,7 @@ export namespace LSPServer {
     async spawn(root) {
       const deno = Bun.which("deno")
       if (!deno) {
-        log.info("deno not found, please install deno first")
+        log.info("deno não encontrado, por favor instale o deno primeiro")
         return
       }
       return {
@@ -214,7 +214,7 @@ export namespace LSPServer {
         if (!Bun.which("go")) return
         if (Flag.OPENCODE_DISABLE_LSP_DOWNLOAD) return
 
-        log.info("installing gopls")
+        log.info("instalando gopls")
         const proc = Bun.spawn({
           cmd: ["go", "install", "golang.org/x/tools/gopls@latest"],
           env: { ...process.env, GOBIN: Global.Path.bin },
@@ -224,7 +224,7 @@ export namespace LSPServer {
         })
         const exit = await proc.exited
         if (exit !== 0) {
-          log.error("Failed to install gopls")
+          log.error("Falha ao instalar gopls")
           return
         }
         bin = path.join(Global.Path.bin, "gopls" + (process.platform === "win32" ? ".exe" : ""))
@@ -252,11 +252,11 @@ export namespace LSPServer {
         const ruby = Bun.which("ruby")
         const gem = Bun.which("gem")
         if (!ruby || !gem) {
-          log.info("Ruby not found, please install Ruby first")
+          log.info("Ruby não encontrado, por favor instale o Ruby primeiro")
           return
         }
         if (Flag.OPENCODE_DISABLE_LSP_DOWNLOAD) return
-        log.info("installing ruby-lsp")
+        log.info("instalando ruby-lsp")
         const proc = Bun.spawn({
           cmd: ["gem", "install", "ruby-lsp", "--bindir", Global.Path.bin],
           stdout: "pipe",
@@ -265,7 +265,7 @@ export namespace LSPServer {
         })
         const exit = await proc.exited
         if (exit !== 0) {
-          log.error("Failed to install ruby-lsp")
+          log.error("Falha ao instalar ruby-lsp")
           return
         }
         bin = path.join(Global.Path.bin, "ruby-lsp" + (process.platform === "win32" ? ".exe" : ""))
@@ -353,12 +353,12 @@ export namespace LSPServer {
         if (!(await Bun.file(binary).exists())) {
           const elixir = Bun.which("elixir")
           if (!elixir) {
-            log.error("elixir is required to run elixir-ls")
+            log.error("elixir é necessário para executar o elixir-ls")
             return
           }
 
           if (Flag.OPENCODE_DISABLE_LSP_DOWNLOAD) return
-          log.info("downloading elixir-ls from GitHub releases")
+          log.info("baixando elixir-ls do GitHub releases")
 
           const response = await fetch("https://github.com/elixir-lsp/elixir-ls/archive/refs/heads/master.zip")
           if (!response.ok) return
@@ -403,16 +403,16 @@ export namespace LSPServer {
       if (!bin) {
         const zig = Bun.which("zig")
         if (!zig) {
-          log.error("Zig is required to use zls. Please install Zig first.")
+          log.error("Zig é necessário para usar o zls. Por favor instale o Zig primeiro.")
           return
         }
 
         if (Flag.OPENCODE_DISABLE_LSP_DOWNLOAD) return
-        log.info("downloading zls from GitHub releases")
+        log.info("baixando zls do GitHub releases")
 
         const releaseResponse = await fetch("https://api.github.com/repos/zigtools/zls/releases/latest")
         if (!releaseResponse.ok) {
-          log.error("Failed to fetch zls release info")
+          log.error("Falha ao buscar informações da versão do zls")
           return
         }
 
@@ -460,7 +460,7 @@ export namespace LSPServer {
         const downloadUrl = asset.browser_download_url
         const downloadResponse = await fetch(downloadUrl)
         if (!downloadResponse.ok) {
-          log.error("Failed to download zls")
+          log.error("Falha ao baixar zls")
           return
         }
 
@@ -478,7 +478,7 @@ export namespace LSPServer {
         bin = path.join(Global.Path.bin, "zls" + (platform === "win32" ? ".exe" : ""))
 
         if (!(await Bun.file(bin).exists())) {
-          log.error("Failed to extract zls binary")
+          log.error("Falha ao extrair binário do zls")
           return
         }
 
@@ -507,12 +507,12 @@ export namespace LSPServer {
       })
       if (!bin) {
         if (!Bun.which("dotnet")) {
-          log.error(".NET SDK is required to install csharp-ls")
+          log.error(".NET SDK é necessário para instalar o csharp-ls")
           return
         }
 
         if (Flag.OPENCODE_DISABLE_LSP_DOWNLOAD) return
-        log.info("installing csharp-ls via dotnet tool")
+        log.info("instalando csharp-ls via dotnet tool")
         const proc = Bun.spawn({
           cmd: ["dotnet", "tool", "install", "csharp-ls", "--tool-path", Global.Path.bin],
           stdout: "pipe",
@@ -521,7 +521,7 @@ export namespace LSPServer {
         })
         const exit = await proc.exited
         if (exit !== 0) {
-          log.error("Failed to install csharp-ls")
+          log.error("Falha ao instalar csharp-ls")
           return
         }
 
@@ -593,11 +593,11 @@ export namespace LSPServer {
       })
       if (!bin) {
         if (Flag.OPENCODE_DISABLE_LSP_DOWNLOAD) return
-        log.info("downloading clangd from GitHub releases")
+        log.info("baixando clangd do GitHub releases")
 
         const releaseResponse = await fetch("https://api.github.com/repos/clangd/clangd/releases/latest")
         if (!releaseResponse.ok) {
-          log.error("Failed to fetch clangd release info")
+          log.error("Falha ao buscar informações da versão do clangd")
           return
         }
 
@@ -628,7 +628,7 @@ export namespace LSPServer {
         const downloadUrl = asset.browser_download_url
         const downloadResponse = await fetch(downloadUrl)
         if (!downloadResponse.ok) {
-          log.error("Failed to download clangd")
+          log.error("Falha ao baixar clangd")
           return
         }
 
@@ -642,7 +642,7 @@ export namespace LSPServer {
         bin = path.join(extractedDir, "bin", "clangd" + (platform === "win32" ? ".exe" : ""))
 
         if (!(await Bun.file(bin).exists())) {
-          log.error("Failed to extract clangd binary")
+          log.error("Falha ao extrair binário do clangd")
           return
         }
 
@@ -708,7 +708,7 @@ export namespace LSPServer {
     async spawn(root) {
       const tsserver = await Bun.resolve("typescript/lib/tsserver.js", Instance.directory).catch(() => {})
       if (!tsserver) {
-        log.info("typescript not found, required for Astro language server")
+        log.info("typescript não encontrado, necessário para o servidor de linguagem Astro")
         return
       }
       const tsdk = path.dirname(tsserver)
@@ -770,7 +770,7 @@ export namespace LSPServer {
           return !m ? undefined : parseInt(m[1])
         })
       if (javaMajorVersion == null || javaMajorVersion < 21) {
-        log.error("JDTLS requires at least Java 21.")
+        log.error("JDTLS requer pelo menos Java 21.")
         return
       }
       const distPath = path.join(Global.Path.bin, "jdtls")
@@ -778,7 +778,7 @@ export namespace LSPServer {
       const installed = await fs.exists(launcherDir)
       if (!installed) {
         if (Flag.OPENCODE_DISABLE_LSP_DOWNLOAD) return
-        log.info("Downloading JDTLS LSP server.")
+        log.info("Baixando servidor LSP JDTLS.")
         await fs.mkdir(distPath, { recursive: true })
         const releaseURL =
           "https://www.eclipse.org/downloads/download.php?file=/jdtls/snapshots/jdt-language-server-latest.tar.gz"

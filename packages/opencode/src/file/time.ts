@@ -27,11 +27,11 @@ export namespace FileTime {
 
   export async function assert(sessionID: string, filepath: string) {
     const time = get(sessionID, filepath)
-    if (!time) throw new Error(`You must read the file ${filepath} before overwriting it. Use the Read tool first`)
+    if (!time) throw new Error(`Você precisa ler o arquivo ${filepath} antes de sobrescrevê-lo. Use a ferramenta de Leitura primeiro`)
     const stats = await Bun.file(filepath).stat()
     if (stats.mtime.getTime() > time.getTime()) {
       throw new Error(
-        `File ${filepath} has been modified since it was last read.\nLast modification: ${stats.mtime.toISOString()}\nLast read: ${time.toISOString()}\n\nPlease read the file again before modifying it.`,
+        `Arquivo ${filepath} foi modificado desde a última leitura.\nÚltima modificação: ${stats.mtime.toISOString()}\nÚltima leitura: ${time.toISOString()}\n\nPor favor, leia o arquivo novamente antes de modificá-lo.`,
       )
     }
   }

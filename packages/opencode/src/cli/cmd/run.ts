@@ -16,67 +16,67 @@ import { SessionPrompt } from "../../session/prompt"
 import { EOL } from "os"
 
 const TOOL: Record<string, [string, string]> = {
-  todowrite: ["Todo", UI.Style.TEXT_WARNING_BOLD],
-  todoread: ["Todo", UI.Style.TEXT_WARNING_BOLD],
-  bash: ["Bash", UI.Style.TEXT_DANGER_BOLD],
-  edit: ["Edit", UI.Style.TEXT_SUCCESS_BOLD],
-  glob: ["Glob", UI.Style.TEXT_INFO_BOLD],
-  grep: ["Grep", UI.Style.TEXT_INFO_BOLD],
-  list: ["List", UI.Style.TEXT_INFO_BOLD],
-  read: ["Read", UI.Style.TEXT_HIGHLIGHT_BOLD],
-  write: ["Write", UI.Style.TEXT_SUCCESS_BOLD],
-  websearch: ["Search", UI.Style.TEXT_DIM_BOLD],
+  todowrite: ["Tarefa", UI.Style.TEXT_WARNING_BOLD],
+  todoread: ["Tarefa", UI.Style.TEXT_WARNING_BOLD],
+  bash: ["Terminal", UI.Style.TEXT_DANGER_BOLD],
+  edit: ["Editar", UI.Style.TEXT_SUCCESS_BOLD],
+  glob: ["Buscar", UI.Style.TEXT_INFO_BOLD],
+  grep: ["Procurar", UI.Style.TEXT_INFO_BOLD],
+  list: ["Listar", UI.Style.TEXT_INFO_BOLD],
+  read: ["Ler", UI.Style.TEXT_HIGHLIGHT_BOLD],
+  write: ["Escrever", UI.Style.TEXT_SUCCESS_BOLD],
+  websearch: ["Pesquisar", UI.Style.TEXT_DIM_BOLD],
 }
 
 export const RunCommand = cmd({
   command: "run [message..]",
-  describe: "run opencode with a message",
+  describe: "executar opencode com uma mensagem",
   builder: (yargs: Argv) => {
     return yargs
       .positional("message", {
-        describe: "message to send",
+        describe: "mensagem para enviar",
         type: "string",
         array: true,
         default: [],
       })
       .option("command", {
-        describe: "the command to run, use message for args",
+        describe: "comando para executar, use message para os argumentos",
         type: "string",
       })
       .option("continue", {
         alias: ["c"],
-        describe: "continue the last session",
+        describe: "continuar a última sessão",
         type: "boolean",
       })
       .option("session", {
         alias: ["s"],
-        describe: "session id to continue",
+        describe: "id da sessão para continuar",
         type: "string",
       })
       .option("share", {
         type: "boolean",
-        describe: "share the session",
+        describe: "compartilhar a sessão",
       })
       .option("model", {
         type: "string",
         alias: ["m"],
-        describe: "model to use in the format of provider/model",
+        describe: "modelo a usar no formato provedor/modelo",
       })
       .option("agent", {
         type: "string",
-        describe: "agent to use",
+        describe: "agente a usar",
       })
       .option("format", {
         type: "string",
         choices: ["default", "json"],
         default: "default",
-        describe: "format: default (formatted) or json (raw JSON events)",
+        describe: "formato: default (formatado) ou json (eventos JSON puros)",
       })
       .option("file", {
         alias: ["f"],
         type: "string",
         array: true,
-        describe: "file(s) to attach to message",
+        describe: "arquivo(s) para anexar à mensagem",
       })
   },
   handler: async (args) => {
@@ -91,11 +91,11 @@ export const RunCommand = cmd({
         const file = Bun.file(resolvedPath)
         const stats = await file.stat().catch(() => {})
         if (!stats) {
-          UI.error(`File not found: ${filePath}`)
+          UI.error(`Arquivo não encontrado: ${filePath}`)
           process.exit(1)
         }
         if (!(await file.exists())) {
-          UI.error(`File not found: ${filePath}`)
+          UI.error(`Arquivo não encontrado: ${filePath}`)
           process.exit(1)
         }
 
@@ -114,7 +114,7 @@ export const RunCommand = cmd({
     if (!process.stdin.isTTY) message += "\n" + (await Bun.stdin.text())
 
     if (message.trim().length === 0 && !args.command) {
-      UI.error("You must provide a message or a command")
+      UI.error("Você precisa fornecer uma mensagem ou um comando")
       process.exit(1)
     }
 
@@ -122,7 +122,7 @@ export const RunCommand = cmd({
       if (args.command) {
         const exists = await Command.get(args.command)
         if (!exists) {
-          UI.error(`Command "${args.command}" not found`)
+          UI.error(`Comando "${args.command}" não encontrado`)
           process.exit(1)
         }
       }
@@ -147,7 +147,7 @@ export const RunCommand = cmd({
       })()
 
       if (!session) {
-        UI.error("Session not found")
+        UI.error("Sessão não encontrada")
         process.exit(1)
       }
 

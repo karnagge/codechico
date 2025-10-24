@@ -8,16 +8,16 @@ export const ServeCommand = cmd({
       .option("port", {
         alias: ["p"],
         type: "number",
-        describe: "port to listen on",
+        describe: "porta para escutar",
         default: 0,
       })
       .option("hostname", {
         alias: ["h"],
         type: "string",
-        describe: "hostname to listen on",
+        describe: "hostname para escutar",
         default: "127.0.0.1",
       }),
-  describe: "starts a headless opencode server",
+  describe: "iniciar um servidor opencode sem interface",
   handler: async (args) => {
     const hostname = args.hostname
     const port = args.port
@@ -25,7 +25,7 @@ export const ServeCommand = cmd({
       port,
       hostname,
     })
-    console.log(`opencode server listening on http://${server.hostname}:${server.port}`)
+    console.log(`🚀 Servidor opencode escutando em http://${server.hostname}:${server.port}`)
     await new Promise(() => {})
     server.stop()
   },

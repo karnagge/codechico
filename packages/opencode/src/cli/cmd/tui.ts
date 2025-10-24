@@ -28,46 +28,46 @@ if (typeof OPENCODE_TUI_PATH !== "undefined") {
 
 export const TuiCommand = cmd({
   command: "$0 [project]",
-  describe: "start opencode tui",
+  describe: "iniciar interface do opencode",
   builder: (yargs) =>
     yargs
       .positional("project", {
         type: "string",
-        describe: "path to start opencode in",
+        describe: "caminho para iniciar o opencode",
       })
       .option("model", {
         type: "string",
         alias: ["m"],
-        describe: "model to use in the format of provider/model",
+        describe: "modelo a usar no formato provedor/modelo",
       })
       .option("continue", {
         alias: ["c"],
-        describe: "continue the last session",
+        describe: "continuar a última sessão",
         type: "boolean",
       })
       .option("session", {
         alias: ["s"],
-        describe: "session id to continue",
+        describe: "id da sessão para continuar",
         type: "string",
       })
       .option("prompt", {
         alias: ["p"],
         type: "string",
-        describe: "prompt to use",
+        describe: "prompt a usar",
       })
       .option("agent", {
         type: "string",
-        describe: "agent to use",
+        describe: "agente a usar",
       })
       .option("port", {
         type: "number",
-        describe: "port to listen on",
+        describe: "porta para escutar",
         default: 0,
       })
       .option("hostname", {
         alias: ["h"],
         type: "string",
-        describe: "hostname to listen on",
+        describe: "hostname para escutar",
         default: "127.0.0.1",
       }),
   handler: async (args) => {
@@ -76,7 +76,7 @@ export const TuiCommand = cmd({
       try {
         process.chdir(cwd)
       } catch (e) {
-        UI.error("Failed to change directory to " + cwd)
+        UI.error("Falha ao mudar o diretório para " + cwd)
         return
       }
       const result = await bootstrap(cwd, async () => {

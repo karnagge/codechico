@@ -39,26 +39,26 @@ export function displayStats(stats: SessionStats) {
 
   // Overview section
   console.log("┌────────────────────────────────────────────────────────┐")
-  console.log("│                       OVERVIEW                         │")
+  console.log("│                    VISÃO GERAL                         │")
   console.log("├────────────────────────────────────────────────────────┤")
-  console.log(renderRow("Sessions", stats.totalSessions.toLocaleString()))
-  console.log(renderRow("Messages", stats.totalMessages.toLocaleString()))
-  console.log(renderRow("Days", stats.days.toString()))
+  console.log(renderRow("Sessões", stats.totalSessions.toLocaleString()))
+  console.log(renderRow("Mensagens", stats.totalMessages.toLocaleString()))
+  console.log(renderRow("Dias", stats.days.toString()))
   console.log("└────────────────────────────────────────────────────────┘")
   console.log()
 
   // Cost & Tokens section
   console.log("┌────────────────────────────────────────────────────────┐")
-  console.log("│                    COST & TOKENS                       │")
+  console.log("│                  CUSTO & TOKENS                        │")
   console.log("├────────────────────────────────────────────────────────┤")
   const cost = isNaN(stats.totalCost) ? 0 : stats.totalCost
   const costPerDay = isNaN(stats.costPerDay) ? 0 : stats.costPerDay
-  console.log(renderRow("Total Cost", `$${cost.toFixed(2)}`))
-  console.log(renderRow("Cost/Day", `$${costPerDay.toFixed(2)}`))
-  console.log(renderRow("Input", formatNumber(stats.totalTokens.input)))
-  console.log(renderRow("Output", formatNumber(stats.totalTokens.output)))
-  console.log(renderRow("Cache Read", formatNumber(stats.totalTokens.cache.read)))
-  console.log(renderRow("Cache Write", formatNumber(stats.totalTokens.cache.write)))
+  console.log(renderRow("Custo Total", `$${cost.toFixed(2)}`))
+  console.log(renderRow("Custo/Dia", `$${costPerDay.toFixed(2)}`))
+  console.log(renderRow("Entrada", formatNumber(stats.totalTokens.input)))
+  console.log(renderRow("Saída", formatNumber(stats.totalTokens.output)))
+  console.log(renderRow("Cache Lido", formatNumber(stats.totalTokens.cache.read)))
+  console.log(renderRow("Cache Escrito", formatNumber(stats.totalTokens.cache.write)))
   console.log("└────────────────────────────────────────────────────────┘")
   console.log()
 
@@ -69,7 +69,7 @@ export function displayStats(stats: SessionStats) {
       .slice(0, 10)
 
     console.log("┌────────────────────────────────────────────────────────┐")
-    console.log("│                      TOOL USAGE                        │")
+    console.log("│                  USO DE FERRAMENTAS                    │")
     console.log("├────────────────────────────────────────────────────────┤")
 
     const maxCount = Math.max(...sortedTools.map(([, count]) => count))

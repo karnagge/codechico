@@ -38,15 +38,15 @@ process.on("uncaughtException", (e) => {
 
 const cli = yargs(hideBin(process.argv))
   .scriptName("opencode")
-  .help("help", "show help")
-  .version("version", "show version number", Installation.VERSION)
+  .help("help", "mostrar ajuda")
+  .version("version", "mostrar versão", Installation.VERSION)
   .alias("version", "v")
   .option("print-logs", {
-    describe: "print logs to stderr",
+    describe: "imprimir logs no stderr",
     type: "boolean",
   })
   .option("log-level", {
-    describe: "log level",
+    describe: "nível de log",
     type: "string",
     choices: ["DEBUG", "INFO", "WARN", "ERROR"],
   })
@@ -87,8 +87,11 @@ const cli = yargs(hideBin(process.argv))
   .fail((msg) => {
     if (
       msg.startsWith("Unknown argument") ||
+      msg.startsWith("Argumento desconhecido") ||
       msg.startsWith("Not enough non-option arguments") ||
-      msg.startsWith("Invalid values:")
+      msg.startsWith("Argumentos insuficientes") ||
+      msg.startsWith("Invalid values:") ||
+      msg.startsWith("Valores inválidos:")
     ) {
       cli.showHelp("log")
     }
@@ -131,7 +134,7 @@ try {
   const formatted = FormatError(e)
   if (formatted) UI.error(formatted)
   if (formatted === undefined) {
-    UI.error("Unexpected error, check log file at " + Log.file() + " for more details" + EOL)
+    UI.error("Erro inesperado! Dê uma olhada no arquivo de log em " + Log.file() + " para mais detalhes" + EOL)
     console.error(e)
   }
   process.exitCode = 1
